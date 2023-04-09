@@ -6,20 +6,6 @@ import sys
 
 lidar = RPLidar('/dev/ttyUSB0')
 
-threshold = 2000 # threshold for notification in mm
-buzzer_centers = [
-    260,
-    285,
-    310,
-    335,
-    0,
-    25,
-    50,
-    75,
-    100
-]
-
-
 #--------------------------------start of buzzer set up -----------------------------------#
 #Disable warnings (optional)
 GPIO.setwarnings(False)
@@ -136,25 +122,10 @@ def signal_handler(sig, frame):
         sys.exit(0)
 
 signal.signal(signal.SIGINT, signal_handler)
-#info = lidar.get_info()
-#print(info)
-
-#health = lidar.get_health()
-#print(health)
 
 for scan in lidar.iter_scans():
         try:
-
-                #if scan[2] > 100 and scan[2] < 260:
-                        #continue
-                #print(scan[2])  angle
-                #print(scan[3]) dist (mm)
-
-                #angle_lst.append(scan[1])
-                #dist_lst.append(scan[2])
-                buzzer_powers(scan)
-
-
+            buzzer_powers(scan)
         except(RPLidarException):
                 lidar.clear_input()
 lidar.stop()
